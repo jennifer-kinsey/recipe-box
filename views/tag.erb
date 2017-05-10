@@ -12,7 +12,7 @@
   <label for="recipes">Available Recipes</label>
   <select class="form-control" name="recipe-id">
     <% @recipes.each do |recipe| %>
-      <option value"<%= recipe.id %>"><%= recipe.title%></option>
+      <option value="<%= recipe.id %>"><%= recipe.title%></option>
     <% end %>
   </select>
   <button type="submit" class="btn btn-info" name="button">add to recipe</button>
