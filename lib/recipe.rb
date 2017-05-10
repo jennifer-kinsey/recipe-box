@@ -28,8 +28,11 @@ end
 
 class Ingredient < ActiveRecord::Base
   belongs_to :recipe
+  validates(:item, {:presence => true, :length => { :maximum => 50, :minimum => 3 }})
+  validates(:recipe_id, presence: true)
 end
 
 class Tag < ActiveRecord::Base
   has_and_belongs_to_many :recipes
+  validates(:name, presence: true)
 end

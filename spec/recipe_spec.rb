@@ -59,6 +59,21 @@ describe(Ingredient) do
     test_ingred = Ingredient.create({:item => "Stouffers Frozen Pot Pie!", recipe_id: test_recipe.id})
     expect(test_ingred.recipe).to eq(test_recipe)
   end
+
+  it('ensures that the ingredient is not blank') do
+    test_ingred = Ingredient.create({:item => "", recipe_id: 1})
+    expect(test_ingred.save).to eq(false)
+  end
+
+  it('ensures that the ingredient is not too long') do
+    test_ingred = Ingredient.create({:item => "kaikuoisuoiuzvoduvoiuxocuvoixucvoiuzfghrlkhrnakjhruybvuovucortnrksjh;buo;iguoueijkjghlxfh", recipe_id: 1})
+    expect(test_ingred.save).to eq(false)
+  end
+
+  it('ensures that the ingredient is not too short') do
+    test_ingred = Ingredient.create({:item => "a", recipe_id: 1})
+    expect(test_ingred.save).to eq(false)
+  end
 end
 
 describe(Tag) do
@@ -69,5 +84,10 @@ describe(Tag) do
     test_recipe3= Recipe.create({title: "Disappointing Tacos", instructions: "throw away", rating: 1})
     test_tag.recipes.push(test_recipe1, test_recipe2, test_recipe3)
     expect(test_tag.recipes).to eq([test_recipe1, test_recipe2, test_recipe3])
+  end
+
+  it("ensures tag isn't empty") do
+    test_tag = Tag.create(name: "")
+    expect(test_tag.save).to eq(false)
   end
 end
