@@ -1,0 +1,35 @@
+<h1>My Recipe Box</h1>
+<form action="/recipe_results" method="post">
+  <label for="recipe_search">Recipe Search:</label>
+  <input type="text" name="recipe_search">
+  <button type="submit" class="btn btn-info">Search</button>
+</form>
+<br>
+
+<form action="/tag_results" method="post">
+  <label for="tag_search">Search by Tag:</label>
+  <input type="text" name="tag_search">
+    <button type="submit" class="btn btn-info">Search</button>
+</form>
+<br>
+
+<form action="/ingredient_results" method="post">
+  <label for="ingredient_search">Search by Ingredients:</label>
+  <input type="text" name="ingredient_search">
+    <button type="submit" class="btn btn-info">Search</button>
+</form>
+<br>
+
+<form action="/add_recipe" method="get">
+  <button type="submit" class="btn btn-info">Add a New Recipe</button>
+</form>
+<br>
+
+<h2>All My Recipes:</h2>
+<% if @recipes.any? %>
+  <% @recipes.each do |recipe| %>
+    <li><a href="/recipes/<%= recipe.id %>"><%= recipe.title %></a></li>
+  <% end %>
+<% else %>
+  <p>You don't have any recipes!</p>
+<% end %>

@@ -1,0 +1,27 @@
+<h3>Update Recipe: <%= @recipe.title %></h3>
+
+<form action="/update_recipe/<%= @recipe.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <label for="title">Recipe Title:</label>
+  <input class="form-control" type="text" name="title">
+  <br>
+
+
+
+
+  <label for="ingredient">Primary Ingredient:</label>
+  <input class="form-control" type="text" name="item">
+  <br>
+
+  <br>
+
+
+
+  <label for="instructions">Instructions:</label>
+  <input class="form-control" type="text" name="instructions">
+  <br>
+  <label for="rating">Rating:</label>
+  <input class="form-control" type="number" name="rating">
+  <br>
+  <button type="submit" class="btn btn-success"> Edit Recipe</button>
+</form>

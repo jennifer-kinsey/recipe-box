@@ -1,0 +1,22 @@
+add_recipe.erb:
+
+<label for="ingredient">Ingredient:</label>
+<input class="form-control" type="text" name="item">
+<div class="new_ingredient">
+</div>
+<button id="ingred_btn" class="btn btn-warning" type="button" name="extra_ingred">Add another ingredient</button>
+
+
+edit_recipe.erb
+
+<label for="ingredient">Ingredient:</label>
+<input class="form-control" type="text" name="item">
+<div class="new_ingredient">
+</div>
+<button id="ingred_btn" class="btn btn-warning" type="button" name="extra_ingred">Add another ingredient</button>
+
+<form action="/add_tags/<%= @recipe.id %>" method="post">
+  <label for="tag">Add Tag</label>
+  <input type="text" class="form-control" name="tag">
+  <button type="submit" class="btn btn-success">Add Tag</button>
+</form>

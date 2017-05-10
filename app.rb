@@ -1,10 +1,83 @@
-require("sinatra")
-require("sinatra/reloader")
-also_reload("lib/**/*.rb")
-require("sinatra/activerecord")
-require("./lib/recipe")
-require("pg")
+require('sinatra')
+require('sinatra/reloader')
+also_reload('lib/**/*.rb')
+require('sinatra/activerecord')
+require('./lib/recipe')
+require('pg')
+require 'pry'
 
-get "/" do
+get '/' do
+  @recipes = Recipe.all
   erb :index
+end
+
+get '/add_recipe' do
+  erb :add_recipe
+end
+
+post '/add_recipe' do
+  title = params['title']
+  instructions = params['instructions']
+  rating = params['rating']
+  recipe = Recipe.create(title: title, instructions: instructions, rating: rating)
+  item = params['item']
+  Ingredient.create(item: item, recipe_id: recipe.id)
+  redirect '/'
+end
+
+get '/recipes/:id' do
+  @recipe = Recipe.find(params['id'].to_i)
+  erb :recipe
+end
+
+delete '/delete/recipe/:id' do
+  recipe = Recipe.find(params['id'].to_i)
+  recipe.delete
+  redirect '/'
+end
+
+post '/add_tags/:id' do
+  recipe1 = Recipe.find(params['id'].to_i)
+  name = params['tag']
+  @tag = Tag.create(name: name)
+  recipe1.tags.push(@tag)
+  @tag.recipes.push(recipe1)
+  redirect "/recipes/#{recipe.id}"
+end
+
+delete '/delete/tag/:id' do
+  tag = Tag.find(params['id'].to_i)
+  tag.delete
+  redirect '/'
+end
+
+get '/update/recipe/:id' do
+  @recipe = Recipe.find(params['id'].to_i)
+  erb :edit_recipe
+end
+
+patch '/update_recipe/:id' do
+  title = params['title']
+  instructions = params['instructions']
+  rating = params['rating']
+  @recipe = Recipe.update(title: title, instructions: instructions, rating: rating)
+  item = params['item']
+# binding.pry
+  @recipe.ingredients.first.update(item: item)
+  @recipe = Recipe.find(params['id'].to_i)
+  erb :recipe
+end
+
+get '/tags/:id' do
+  @tag = Tag.find(params['id'].to_i)
+  @recipes = Recipe.all
+  erb :tag
+end
+
+patch '/tag/add_recipe/:id' do
+  @tag = Tag.find(params['id'].to_i)
+binding.pry
+  recipe1 = Recipe.find(params['recipe-id'])
+  @tag.recipes.push(recipe1)
+  redirect "/tags/#{@tag.id}"
 end

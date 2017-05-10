@@ -1,0 +1,25 @@
+<h3><%= @tag.name %></h3>
+
+
+<% @tag.recipes.each do |recipe| %>
+  <li><a href="/recipes/<%= recipe.id %>"><%= recipe.title %></a></li>
+
+<% end %>
+
+<h3>Add this tag to another recipe</h3>
+<form action="/tag/add_recipe/<%= @tag.id%>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <label for="recipes">Available Recipes</label>
+  <select class="form-control" name="recipe-id">
+    <% @recipes.each do |recipe| %>
+      <option value"<%= recipe.id %>"><%= recipe.title%></option>
+    <% end %>
+  </select>
+  <button type="submit" class="btn btn-info" name="button">add to recipe</button>
+</form>
+
+<hr>
+<form class="" action="/delete/tag/<%= @tag.id %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button class="btn btn-danger" href="/">delete tag</button>
+</form>
