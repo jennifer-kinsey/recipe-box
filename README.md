@@ -1,18 +1,38 @@
-# <!--PROJECT NAME HERE-->
+# Recipe Box
 
-<!--PROJECT DESCRIPTION HERE-->
+This project allows the user the ability to store their own recipes. Recipes have ingredients and tags as well. The user can search through their recipes by name, ingredients, and tags. The user has full capability to add, edit, delete, and view all data by recipe, tag, and ingredient.
 
 ### Prerequisites
 
 Web browser with ES6 compatibility
 Examples: Chrome, Safari
 
-Ruby <!--VERSION HERE-->
+Ruby 2.3.1
 Bundler
 
 ### Installing
 
-Installation is quick and easy! First you can open this link <!--HEROKU LINK HERE--> to see the webpage in action live online. Or you can clone this repository to your machine, navigate to the file path in your terminal, and run 'app.rb' by typing '$ruby app.rb'. If you chose to clone the repository, after you run 'app.rb' you will need to copy the localhost path into your web browser. The standard localhost for Sinatra is port 4567
+Clone this repo by typing into the terminal:
+```
+$ git clone https://github.com/jennifer-kinsey/recipe-box.git
+```
+
+In a new terminal tab:
+```
+$ postgres
+```
+
+In a new terminal tab:
+```
+$ rake db:schema:load
+```
+
+In the first terminal window type command:
+```
+$ruby app.rb'
+```
+Sinatra will now make this project available in your browser by going to localhost:4567.
+
 
 ## Built With
 
@@ -23,16 +43,17 @@ Installation is quick and easy! First you can open this link <!--HEROKU LINK HER
 * Bootstrap https://getbootstrap.com/
 * ES6
 * Jquery https://jquery.com/
+* ActiveRecord
 
 ## Authors
 
-* <!--YOUR NAME HERE-->
+* Grady Shelton and Jennifer Kinsey
 
 ## License
 
 MIT License
 
-Copyright (c) <!--YOUR NAME & YEAR HERE-->
+Copyright (c) Grady Shelton and Jennifer Kinsey
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -46,9 +67,8 @@ copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
