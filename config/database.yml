@@ -1,0 +1,6 @@
+development:
+  adapter: postgresql
+  database: recipe_box2_development
+test:
+  adapter: postgresql
+  database: recipe_box2_test
