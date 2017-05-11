@@ -22,14 +22,14 @@ In a new terminal tab:
 $ postgres
 ```
 
-In a new terminal tab:
+Navigate to this project directory in the terminal. Then in a new tab type:
 ```
 $ rake db:schema:load
 ```
 
 In the first terminal window type command:
 ```
-$ruby app.rb'
+$ruby app.rb
 ```
 Sinatra will now make this project available in your browser by going to localhost:4567.
 

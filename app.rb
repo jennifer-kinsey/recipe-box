@@ -30,6 +30,13 @@ get '/recipes/:id' do
   erb :recipe
 end
 
+post '/add_ingredients/:id' do
+  recipe = Recipe.find(params['id'].to_i)
+  item = params['item']
+  Ingredient.create(item: item, recipe_id: recipe.id)
+  redirect "/recipes/#{recipe.id}"
+end
+
 delete '/delete/recipe/:id' do
   recipe = Recipe.find(params['id'].to_i)
   recipe.delete
@@ -41,8 +48,8 @@ post '/add_tags/:id' do
   name = params['tag']
   @tag = Tag.create(name: name)
   recipe1.tags.push(@tag)
-  @tag.recipes.push(recipe1)
-  redirect "/recipes/#{recipe.id}"
+  # @tag.recipes.push(recipe1)
+  redirect "/recipes/#{recipe1.id}"
 end
 
 delete '/delete/tag/:id' do
@@ -57,12 +64,12 @@ get '/update/recipe/:id' do
 end
 
 patch '/update_recipe/:id' do
+  @recipe = Recipe.find(params['id'].to_i)
   title = params['title']
   instructions = params['instructions']
   rating = params['rating']
-  @recipe = Recipe.update(title: title, instructions: instructions, rating: rating)
+  @recipe.update(title: title, instructions: instructions, rating: rating)
   item = params['item']
-# binding.pry
   @recipe.ingredients.first.update(item: item)
   @recipe = Recipe.find(params['id'].to_i)
   erb :recipe
@@ -76,7 +83,6 @@ end
 
 patch '/tag/add_recipe/:id' do
   @tag = Tag.find(params['id'].to_i)
-binding.pry
   recipe1 = Recipe.find(params['recipe-id'])
   @tag.recipes.push(recipe1)
   redirect "/tags/#{@tag.id}"
