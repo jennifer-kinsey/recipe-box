@@ -6,17 +6,14 @@
 </form>
 <br>
 
-<form action="/tag_results" method="post">
-  <label for="tag_search">Search by Tag:</label>
-  <input type="text" name="tag_search">
-    <button type="submit" class="btn btn-info">Search</button>
-</form>
-<br>
-
-<form action="/ingredient_results" method="post">
-  <label for="ingredient_search">Search by Ingredients:</label>
-  <input type="text" name="ingredient_search">
-    <button type="submit" class="btn btn-info">Search</button>
+<form action="/ingredient/recipe_results" method="get">
+  <label for="recipes">Known Ingredients</label>
+  <select name="ingredient-id">
+    <% @ingredients.each do |ingredient| %>
+      <option value="<%= ingredient.id %>"><%= ingredient.item %></option>
+    <% end %>
+  </select>
+  <button type="submit" class="btn btn-info" name="button">Find its recipes!</button>
 </form>
 <br>
 

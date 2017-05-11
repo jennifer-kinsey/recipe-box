@@ -1,5 +1,5 @@
 class Recipe < ActiveRecord::Base
-  has_and_belongs_to_many :ingredients
+  has_and_belongs_to_many :ingredients, dependent: :destroy
   has_and_belongs_to_many :tags
   validates(:title, {:presence => true, :length => { :maximum => 50, :minimum => 3 }})
   validates(:instructions, presence: true)
@@ -25,14 +25,15 @@ private
   end
 
   def self.recipe_search(input)
-    Recipe.where('title like ?', "%#{input}%")
+    input.downcase!
+    Recipe.where('lower(title) like ?', "%#{input}%")
   end
 
 end
 
 class Ingredient < ActiveRecord::Base
   has_and_belongs_to_many :recipes
-  validates(:item, {:presence => true, :length => { :maximum => 50, :minimum => 3 }})
+  validates(:item, {presence: true, :length => { :maximum => 50, :minimum => 3 }})
 
 end
 

@@ -1,0 +1,24 @@
+<h3>Oh no! Dark Magic.</h3>
+<% if @recipe != nil %>
+<ul>
+  <% @recipe.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+</ul>
+<% end %>
+<% if @ingredient != nil %>
+<ul>
+  <% @ingredient.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+</ul>
+<% end %>
+<% if @tag != nil %>
+<ul>
+  <% @tag.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<h5><a href="/" >Return to main page to try again</a></h5>

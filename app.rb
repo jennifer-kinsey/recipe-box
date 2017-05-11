@@ -8,6 +8,8 @@ require 'pry'
 
 get '/' do
   recipes = Recipe.all
+  ingredients = Ingredient.all
+  @ingredients = ingredients.order(item: :desc)
   @recipes = recipes.order(rating: :desc)
   erb :index
 end
@@ -20,11 +22,15 @@ post '/add_recipe' do
   title = params['title']
   instructions = params['instructions']
   rating = params['rating']
-  recipe = Recipe.create(title: title, instructions: instructions, rating: rating)
+  @recipe = Recipe.create(title: title, instructions: instructions, rating: rating)
   item = params['item']
-  ingredient = Ingredient.create(item: item)
-  ingredient.recipes.push(recipe)
-  redirect '/'
+  @ingredient = Ingredient.create(item: item)
+  @ingredient.recipes.push(@recipe)
+  if @recipe.save && @ingredient.save
+    redirect '/'
+  else
+    erb(:error)
+  end
 end
 
 get '/recipes/:id' do
@@ -35,9 +41,13 @@ end
 post '/add_ingredients/:id' do
   recipe = Recipe.find(params['id'].to_i)
   item = params['item']
-  ingredient = Ingredient.create(item: item)
-  ingredient.recipes.push(recipe)
-  redirect "/recipes/#{recipe.id}"
+  @ingredient = Ingredient.create(item: item)
+  @ingredient.recipes.push(recipe)
+  if @ingredient.save
+    redirect "/recipes/#{recipe.id}"
+  else
+    erb(:error)
+  end
 end
 
 delete '/delete/recipe/:id' do
@@ -60,7 +70,11 @@ patch '/update_recipe/:id' do
   item = params['item']
   @recipe.ingredients.first.update(item: item)
   @recipe = Recipe.find(params['id'].to_i)
-  erb :recipe
+  if @recipe.update(title: title, instructions: instructions, rating: rating)
+    erb :recipe
+  else
+    erb :error
+  end
 end
 
 post '/add_tags/:id' do
@@ -68,7 +82,11 @@ post '/add_tags/:id' do
   name = params['tag']
   @tag = Tag.create(name: name)
   recipe1.tags.push(@tag)
-  redirect "/recipes/#{recipe1.id}"
+  if @tag.save
+    redirect "/recipes/#{recipe1.id}"
+  else
+    erb :error
+  end
 end
 
 get '/tags/:id' do
@@ -87,7 +105,11 @@ patch '/edit/tag/:id' do
   @tag = Tag.find(params['id'].to_i)
   name = params['name']
   @tag.update(name: name)
-  redirect "/tags/#{@tag.id}"
+  if @tag.save
+    redirect "/tags/#{@tag.id}"
+  else
+    erb :error
+  end
 end
 
 
@@ -102,4 +124,11 @@ post '/recipe_results' do
   input = params['recipe_search']
   @recipe_results = Recipe.recipe_search(input)
   erb :recipe_results
+end
+
+get '/ingredient/recipe_results' do
+  ingredient = params['ingredient-id'].to_i
+  @ingredient = Ingredient.find(ingredient)
+  @recipes = @ingredient.recipes
+  erb :ingredient_recipes
 end

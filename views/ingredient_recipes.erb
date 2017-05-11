@@ -1,0 +1,11 @@
+<h1>Recipe Results for <%= @ingredient.item %></h1>
+
+<% if @recipes.any? %>
+  <% @recipes.each do |recipe| %>
+  <li><a href="/recipes/<%= recipe.id %>"><%= recipe.title %></a></li>
+  <%end%>
+<% else %>
+  <h3>
+    Link died of hunger.
+  </h3>
+<% end %>

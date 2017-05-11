@@ -34,6 +34,12 @@ describe(Recipe) do
       test_recipe2 = Recipe.create({title: "Chicken Chalupa", instructions: "order and eat", rating: 4})
       expect(Recipe.recipe_search("Chicken")).to eq([test_recipe, test_recipe2])
     end
+
+    it('searches through all the recipes regardless of search case') do
+      test_recipe = Recipe.create({title: "Chicken Pot Pie", instructions: "place frozen pot pie in oven", rating: 3})
+      test_recipe2 = Recipe.create({title: "Chicken Chalupa", instructions: "order and eat", rating: 4})
+      expect(Recipe.recipe_search("CHICKEN")).to eq([test_recipe, test_recipe2])
+    end
   end
 
   it('shows all recipes that an ingredient is used in') do
