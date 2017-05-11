@@ -28,7 +28,11 @@
 <h2>All My Recipes:</h2>
 <% if @recipes.any? %>
   <% @recipes.each do |recipe| %>
-    <li><a href="/recipes/<%= recipe.id %>"><%= recipe.title %>, Rating: <%= recipe.rating %></a></li>
+    <li><a href="/recipes/<%= recipe.id %>"><%= recipe.title %></a>:
+    <% recipe.rating.times do %>
+      <img class="heart" src="/img/heart.png">
+      <% end %>
+    </li>
   <% end %>
 <% else %>
   <p>You don't have any recipes!</p>

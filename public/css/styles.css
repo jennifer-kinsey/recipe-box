@@ -1,0 +1,8 @@
+.heart {
+  width: 18px;
+}
+
+body{
+  background-image: url("../img/cooking_bg.jpg");
+  background-size: cover;
+}

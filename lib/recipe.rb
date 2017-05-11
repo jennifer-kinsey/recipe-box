@@ -1,5 +1,5 @@
 class Recipe < ActiveRecord::Base
-  has_many :ingredients
+  has_and_belongs_to_many :ingredients
   has_and_belongs_to_many :tags
   validates(:title, {:presence => true, :length => { :maximum => 50, :minimum => 3 }})
   validates(:instructions, presence: true)
@@ -41,9 +41,8 @@ private
 end
 
 class Ingredient < ActiveRecord::Base
-  belongs_to :recipe
+  has_and_belongs_to_many :recipes
   validates(:item, {:presence => true, :length => { :maximum => 50, :minimum => 3 }})
-  validates(:recipe_id, presence: true)
 
 end
 

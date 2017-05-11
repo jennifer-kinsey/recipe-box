@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe(Recipe) do
-  it { should have_many(:ingredients) }
+  it { should have_and_belong_to_many(:ingredients) }
   it { should have_and_belong_to_many(:tags) }
   it { should validate_presence_of(:title) }
 
@@ -51,22 +51,23 @@ end
 
 
 describe(Ingredient) do
-    it { should belong_to(:recipe) }
+    it { should have_and_belong_to_many(:recipes) }
     it { should validate_presence_of(:item) }
 
   it("returns recipes by ingredient") do
     test_recipe = Recipe.create({title: "Chicken Pot Pie", instructions: "place frozen pot pie in oven", rating: 3})
-    test_ingred = Ingredient.create({:item => "Stouffers Frozen Pot Pie!", recipe_id: test_recipe.id})
-    expect(test_ingred.recipe).to eq(test_recipe)
+    test_ingred = Ingredient.create({:item => "Stouffers Frozen Pot Pie!"})
+    test_ingred.recipes.push(test_recipe)
+    expect(test_ingred.recipes).to eq([test_recipe])
   end
 
   it('ensures that the ingredient is not too long') do
-    test_ingred = Ingredient.create({:item => "kaikuoisuoiuzvoduvoiuxocuvoixucvoiuzfghrlkhrnakjhruybvuovucortnrksjh;buo;iguoueijkjghlxfh", recipe_id: 1})
+    test_ingred = Ingredient.create({:item => "kaikuoisuoiuzvoduvoiuxocuvoixucvoiuzfghrlkhrnakjhruybvuovucortnrksjh;buo;iguoueijkjghlxfh"})
     expect(test_ingred.save).to eq(false)
   end
 
   it('ensures that the ingredient is not too short') do
-    test_ingred = Ingredient.create({:item => "a", recipe_id: 1})
+    test_ingred = Ingredient.create({:item => "a"})
     expect(test_ingred.save).to eq(false)
   end
 
