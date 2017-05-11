@@ -68,7 +68,6 @@ post '/add_tags/:id' do
   name = params['tag']
   @tag = Tag.create(name: name)
   recipe1.tags.push(@tag)
-  # @tag.recipes.push(recipe1)
   redirect "/recipes/#{recipe1.id}"
 end
 

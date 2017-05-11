@@ -28,16 +28,6 @@ private
     Recipe.where('title like ?', "%#{input}%")
   end
 
-
-  def self.ingredient_search(input)
-    recipes = Recipe.all
-    found_recipes = []
-    recipes.each do |recipe|
-      found_recipes = Recipe.where('recipe.ingredients.item like ?', "%#{input}%")
-    end
-    found_recipes
-  end
-
 end
 
 class Ingredient < ActiveRecord::Base

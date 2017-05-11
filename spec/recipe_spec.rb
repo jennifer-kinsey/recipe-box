@@ -36,16 +36,14 @@ describe(Recipe) do
     end
   end
 
-  # describe(".ingredient_search") do
-  #   it('searches through all the ingredients and returns matches based on title') do
-  #     test_recipe = Recipe.create({title: "Chicken Pot Pie", instructions: "place frozen pot pie in oven", rating: 3})
-  #     test_recipe2 = Recipe.create({title: "Chicken Chalupa", instructions: "order and eat", rating: 4})
-  #     test_ingredient = Ingredient.create({:item => "salt", recipe_id: test_recipe.id})
-  #     test_ingredient2 = Ingredient.create({:item => "salt", recipe_id: test_recipe2.id})
-  #
-  #     expect(Recipe.ingredient_search("salt")).to eq([test_recipe, test_recipe2])
-  #   end
-  # end
+  it('shows all recipes that an ingredient is used in') do
+    test_recipe = Recipe.create({title: "Chicken Pot Pie", instructions: "place frozen pot pie in oven", rating: 3})
+    test_recipe2 = Recipe.create({title: "Chicken Chalupa", instructions: "order and eat", rating: 4})
+    test_ingredient = Ingredient.create({:item => "salt"})
+    test_ingredient.recipes.push(test_recipe)
+    test_ingredient.recipes.push(test_recipe2)
+    expect(test_ingredient.recipes).to eq([test_recipe, test_recipe2])
+  end
 
 end
 
