@@ -1,20 +1,9 @@
 require "spec_helper"
 
 describe(Recipe) do
-  it("has many ingredients") do
-    test_recipe = Recipe.create({title: "Chicken Pot Pie", instructions: "place frozen pot pie in oven", rating: 3})
-    test_ingred1 = Ingredient.create({:item => "Stouffers Frozen Pot Pie!", recipe_id: test_recipe.id})
-    test_ingred2 = Ingredient.create({:item => "salt", recipe_id: test_recipe.id})
-    expect(test_recipe.ingredients).to eq([test_ingred1, test_ingred2])
-  end
-  it("has many tags") do
-    test_recipe = Recipe.create({title: "Chicken Pot Pie", instructions: "place frozen pot pie in oven", rating: 3})
-    test_tag1 = Tag.create({name: "salty"})
-    test_tag2 = Tag.create({name: "spicy"})
-    test_tag3 = Tag.create({name: "fattening"})
-    test_recipe.tags.push(test_tag1, test_tag2, test_tag3)
-    expect(test_recipe.tags).to eq([test_tag1, test_tag2, test_tag3])
-  end
+  it { should have_many(:ingredients) }
+  it { should have_and_belong_to_many(:tags) }
+  it { should validate_presence_of(:title) }
 
   it("returns false if it's too long or too short of a recipe title") do
     test_recipe = Recipe.create({title: "Pi", instructions: "place frozen pot pie in oven", rating: 3})
@@ -30,11 +19,6 @@ describe(Recipe) do
     end
   end
 
-  it("ensures there are instructions") do
-    test_recipe = Recipe.create({title: "spaghetti sandwich", instructions: "", rating: 3})
-    expect(test_recipe.save).to eq(false)
-  end
-
   describe("#check_rating") do
     it('ensures the rating value is between 1 and 5') do
       test_recipe = Recipe.create({title: "spaghetti sandwich", instructions: "place frozen pot pie in oven", rating: 20})
@@ -46,33 +30,34 @@ describe(Recipe) do
 
   describe(".recipe_search") do
     it('searches through all the recipes and returns matches based on title') do
-      argument = "Chicken"
       test_recipe = Recipe.create({title: "Chicken Pot Pie", instructions: "place frozen pot pie in oven", rating: 3})
       test_recipe2 = Recipe.create({title: "Chicken Chalupa", instructions: "order and eat", rating: 4})
-      expect(Recipe.recipe_search(argument)).to eq[test_recipe, test_recipe2]
+      expect(Recipe.recipe_search("Chicken")).to eq([test_recipe, test_recipe2])
     end
   end
+
+  # describe(".ingredient_search") do
+  #   it('searches through all the ingredients and returns matches based on title') do
+  #     test_recipe = Recipe.create({title: "Chicken Pot Pie", instructions: "place frozen pot pie in oven", rating: 3})
+  #     test_recipe2 = Recipe.create({title: "Chicken Chalupa", instructions: "order and eat", rating: 4})
+  #     test_ingredient = Ingredient.create({:item => "salt", recipe_id: test_recipe.id})
+  #     test_ingredient2 = Ingredient.create({:item => "salt", recipe_id: test_recipe2.id})
+  #
+  #     expect(Recipe.ingredient_search("salt")).to eq([test_recipe, test_recipe2])
+  #   end
+  # end
 
 end
 
 
 describe(Ingredient) do
-  it("has a recipe") do
-    test_recipe = Recipe.create({title: "Chicken Pot Pie", instructions: "place frozen pot pie in oven", rating: 3})
-    test_ingred1 = Ingredient.create({:item => "Stouffers Frozen Pot Pie!", recipe_id: test_recipe.id})
-    test_ingred2 = Ingredient.create({:item => "salt", recipe_id: test_recipe.id})
-    expect(test_ingred1.recipe).to eq(test_recipe)
-    expect(test_ingred2.recipe).to eq(test_recipe)
-  end
+    it { should belong_to(:recipe) }
+    it { should validate_presence_of(:item) }
+
   it("returns recipes by ingredient") do
     test_recipe = Recipe.create({title: "Chicken Pot Pie", instructions: "place frozen pot pie in oven", rating: 3})
     test_ingred = Ingredient.create({:item => "Stouffers Frozen Pot Pie!", recipe_id: test_recipe.id})
     expect(test_ingred.recipe).to eq(test_recipe)
-  end
-
-  it('ensures that the ingredient is not blank') do
-    test_ingred = Ingredient.create({:item => "", recipe_id: 1})
-    expect(test_ingred.save).to eq(false)
   end
 
   it('ensures that the ingredient is not too long') do
@@ -84,20 +69,10 @@ describe(Ingredient) do
     test_ingred = Ingredient.create({:item => "a", recipe_id: 1})
     expect(test_ingred.save).to eq(false)
   end
+
 end
 
 describe(Tag) do
-  it("has many recipes") do
-    test_tag = Tag.create(name: "Mexican")
-    test_recipe1= Recipe.create({title: "Chicken Pot Pie", instructions: "place frozen pot pie in oven", rating: 3})
-    test_recipe2= Recipe.create({title: "Yakisoba Burrito", instructions: "do stuff", rating: 3})
-    test_recipe3= Recipe.create({title: "Disappointing Tacos", instructions: "throw away", rating: 1})
-    test_tag.recipes.push(test_recipe1, test_recipe2, test_recipe3)
-    expect(test_tag.recipes).to eq([test_recipe1, test_recipe2, test_recipe3])
-  end
-
-  it("ensures tag isn't empty") do
-    test_tag = Tag.create(name: "")
-    expect(test_tag.save).to eq(false)
-  end
+  it { should have_and_belong_to_many(:recipes) }
+  it { should validate_presence_of(:name) }
 end

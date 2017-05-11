@@ -28,12 +28,24 @@ private
     Recipe.where('title like ?', "%#{input}%")
   end
 
+
+  def self.ingredient_search(input)
+    recipes = Recipe.all
+    found_recipes = []
+    recipes.each do |recipe|
+      found_recipes = Recipe.where('recipe.ingredients.item like ?', "%#{input}%")
+    end
+    found_recipes
+  # binding.pry
+  end
+
 end
 
 class Ingredient < ActiveRecord::Base
   belongs_to :recipe
   validates(:item, {:presence => true, :length => { :maximum => 50, :minimum => 3 }})
   validates(:recipe_id, presence: true)
+
 end
 
 class Tag < ActiveRecord::Base

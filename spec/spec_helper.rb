@@ -4,6 +4,7 @@ require("pg")
 require("sinatra/activerecord")
 require("recipe")
 require "pry"
+require "shoulda-matchers"
 
 
 RSpec.configure do |config|

@@ -3,15 +3,15 @@
     <h3><%= @recipe.title %></h3>
 
     <p>
-      Rating: <%= @recipe.rating %> / 5
+      <strong>Rating:</strong> <%= @recipe.rating %> / 5
     </p>
 
     <p>
-      Instructions: <%= @recipe.instructions %>
+      <strong>Instructions:</strong> <%= @recipe.instructions %>
     </p>
 
     <p>
-    Ingredient(s):
+    <strong>Ingredient(s):</strong>
      <% @recipe.ingredients.each do |ingredient| %>
        <li> <%= ingredient.item %> </li>
      <%end%>
@@ -28,8 +28,8 @@
       <input type="text" class="form-control" name="tag">
       <button type="submit" class="btn btn-success">Add Tag</button>
     </form>
+    <h3>Tags:</h3>
     <p>
-    Tags:
      <% @recipe.tags.each do |tag| %>
        <li><a href="/tags/<%= tag.id %>"> <%= tag.name %></a> </li>
      <%end%>
