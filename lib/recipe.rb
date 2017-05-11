@@ -36,9 +36,9 @@ private
       found_recipes = Recipe.where('recipe.ingredients.item like ?', "%#{input}%")
     end
     found_recipes
-  # binding.pry
   end
 
+  
 end
 
 class Ingredient < ActiveRecord::Base

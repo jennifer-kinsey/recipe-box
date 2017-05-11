@@ -7,7 +7,8 @@ require('pg')
 require 'pry'
 
 get '/' do
-  @recipes = Recipe.all
+  recipes = Recipe.all
+  @recipes = recipes.order(rating: :desc)
   erb :index
 end
 
