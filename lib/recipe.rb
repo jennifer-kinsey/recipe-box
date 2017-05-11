@@ -38,7 +38,6 @@ private
     found_recipes
   end
 
-  
 end
 
 class Ingredient < ActiveRecord::Base

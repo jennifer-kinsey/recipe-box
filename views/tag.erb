@@ -19,6 +19,11 @@
 </form>
 
 <hr>
+<form class="" action="/edit/tag/<%= @tag.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <input placeholder="<%= @tag.name %>" type="text" name="name">
+  <button class="btn btn-warning" href="/">update tag name</button>
+</form>
 <form class="" action="/delete/tag/<%= @tag.id %>" method="post">
   <input type="hidden" name="_method" value="delete">
   <button class="btn btn-danger" href="/">delete tag</button>

@@ -44,21 +44,6 @@ delete '/delete/recipe/:id' do
   redirect '/'
 end
 
-post '/add_tags/:id' do
-  recipe1 = Recipe.find(params['id'].to_i)
-  name = params['tag']
-  @tag = Tag.create(name: name)
-  recipe1.tags.push(@tag)
-  # @tag.recipes.push(recipe1)
-  redirect "/recipes/#{recipe1.id}"
-end
-
-delete '/delete/tag/:id' do
-  tag = Tag.find(params['id'].to_i)
-  tag.delete
-  redirect '/'
-end
-
 get '/update/recipe/:id' do
   @recipe = Recipe.find(params['id'].to_i)
   erb :edit_recipe
@@ -76,11 +61,34 @@ patch '/update_recipe/:id' do
   erb :recipe
 end
 
+post '/add_tags/:id' do
+  recipe1 = Recipe.find(params['id'].to_i)
+  name = params['tag']
+  @tag = Tag.create(name: name)
+  recipe1.tags.push(@tag)
+  # @tag.recipes.push(recipe1)
+  redirect "/recipes/#{recipe1.id}"
+end
+
 get '/tags/:id' do
   @tag = Tag.find(params['id'].to_i)
   @recipes = Recipe.all
   erb :tag
 end
+
+delete '/delete/tag/:id' do
+  tag = Tag.find(params['id'].to_i)
+  tag.delete
+  redirect '/'
+end
+
+patch '/edit/tag/:id' do
+  @tag = Tag.find(params['id'].to_i)
+  name = params['name']
+  @tag.update(name: name)
+  redirect "/tags/#{@tag.id}"
+end
+
 
 patch '/tag/add_recipe/:id' do
   @tag = Tag.find(params['id'].to_i)
@@ -88,11 +96,6 @@ patch '/tag/add_recipe/:id' do
   @tag.recipes.push(recipe1)
   redirect "/tags/#{@tag.id}"
 end
-
-# get '/recipe_results' do
-#
-#
-# end
 
 post '/recipe_results' do
   input = params['recipe_search']
