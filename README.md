@@ -36,6 +36,13 @@ $ruby app.rb
 ```
 Sinatra will now make this project available in your browser by going to localhost:4567.
 
+## Screenshots
+
+**Recipe Page:**
+![Image of Recipe Page Screenshot](public/img/recipe_shot.png)
+
+**Tag Page:**
+![Image of Tag Page Screenshot](public/img/tag_shot.png)
 
 ## Built With
 

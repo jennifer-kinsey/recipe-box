@@ -4,7 +4,6 @@ also_reload('lib/**/*.rb')
 require('sinatra/activerecord')
 require('./lib/recipe')
 require('pg')
-require 'pry'
 
 get '/' do
   recipes = Recipe.all
