@@ -43,6 +43,16 @@ describe(Recipe) do
       expect(test_recipe2.rating).to eq(1)
     end
   end
+
+  describe(".recipe_search") do
+    it('searches through all the recipes and returns matches based on title') do
+      argument = "Chicken"
+      test_recipe = Recipe.create({title: "Chicken Pot Pie", instructions: "place frozen pot pie in oven", rating: 3})
+      test_recipe2 = Recipe.create({title: "Chicken Chalupa", instructions: "order and eat", rating: 4})
+      expect(Recipe.recipe_search(argument)).to eq[test_recipe, test_recipe2]
+    end
+  end
+
 end
 
 

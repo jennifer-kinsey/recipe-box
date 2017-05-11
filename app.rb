@@ -87,3 +87,14 @@ patch '/tag/add_recipe/:id' do
   @tag.recipes.push(recipe1)
   redirect "/tags/#{@tag.id}"
 end
+
+# get '/recipe_results' do
+#
+#
+# end
+
+post '/recipe_results' do
+  input = params['recipe_search']
+  @recipe_results = Recipe.recipe_search(input)
+  erb :recipe_results
+end

@@ -1,0 +1,12 @@
+<h1>Here's your matching recipes:</h1>
+<% if @recipe_results.any? %>
+  <ul>
+    <% @recipe_results.each do |recipe| %>
+    <li><a href="/recipes/<%=recipe.id%>"><%= recipe.title %></a></li>
+    <%end%>
+  </ul>
+<% else %>
+  <p>There are no results</p>
+<% end %>
+
+<a href="/">Home</a>

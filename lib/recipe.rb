@@ -24,6 +24,10 @@ private
     end
   end
 
+  def self.recipe_search(input)
+    Recipe.where('title like ?', "%#{input}%")
+  end
+
 end
 
 class Ingredient < ActiveRecord::Base
