@@ -22,7 +22,8 @@ post '/add_recipe' do
   rating = params['rating']
   recipe = Recipe.create(title: title, instructions: instructions, rating: rating)
   item = params['item']
-  Ingredient.create(item: item, recipe_id: recipe.id)
+  ingredient = Ingredient.create(item: item)
+  ingredient.recipes.push(recipe)
   redirect '/'
 end
 
@@ -34,7 +35,8 @@ end
 post '/add_ingredients/:id' do
   recipe = Recipe.find(params['id'].to_i)
   item = params['item']
-  Ingredient.create(item: item, recipe_id: recipe.id)
+  ingredient = Ingredient.create(item: item)
+  ingredient.recipes.push(recipe)
   redirect "/recipes/#{recipe.id}"
 end
 
