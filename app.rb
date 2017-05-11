@@ -5,6 +5,8 @@ require('sinatra/activerecord')
 require('./lib/recipe')
 require('pg')
 
+DATABASE_URL="postgres://localhost/recipe_box_development"
+
 get '/' do
   recipes = Recipe.all
   ingredients = Ingredient.all
